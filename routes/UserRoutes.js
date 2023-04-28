@@ -149,14 +149,21 @@ router.get( '/allposts', ( request, response ) => {
 router.get( '/:userid/posts' , ( request, response ) => {
     const userId = request.params.userid;
 
-    const filteredPosts = posts.filter( post => {
-        // filter by userid
-        return post.author === userId;
-    });
+    const userFound = users.find( user => user.username === userId );
 
-    console.log('---');
-    console.log("Posts: ", filteredPosts);
-    response.status( 200 ).send( { Posts: filteredPosts} );
+    if( userFound ) {
+        const filteredPosts = posts.filter( post => {
+            // filter by userid
+            return post.author === userId;
+        });
+        console.log('---');
+        console.log("Posts: ", filteredPosts);
+        response.status( 200 ).send( { Posts: filteredPosts} );
+    }else{
+        console.log('---');
+        console.log("error: ", "Invalid URL request.");
+        response.status( 404 ).send( { error: "Invalid URL request." } );
+    }
 });
 
 
