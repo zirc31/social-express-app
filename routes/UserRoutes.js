@@ -68,6 +68,57 @@ router.post( '/register' , ( request, response ) => {
     }
 });
 
+/*
+    On Success
+    {
+        "message" : "Successful login"
+    }
+    On Error
+    {
+        "error" : "Invalid credentials"
+    } 
+*/
+// POST - http://localhost:<PORT>/login
+router.post( '/login' , ( request, response ) => {
+    if( request.body.email > "" && request.body.username > "" && request.body.password > "" ) {
+        
+        const inputUserEmail = request.body.email;
+        const inputUserName = request.body.username;
+        const inputUserPassword = request.body.password;
+
+        // const inputUserName = users.find( user => user.username.toLowerCase() === username.toLowerCase() );
+
+        const checkExistingUserIndex = users.findIndex( user => user.username === inputUserName );
+
+        if( checkExistingUserIndex === -1) {
+            console.log(checkExistingUserIndex);
+            response.status( 404 ).send( { error: "Invalid credentials" } );
+        }else{
+            console.log(checkExistingUserIndex);
+            // console.log(users[checkExistingUserIndex].email);
+            // console.log(users[checkExistingUserIndex].username);
+            // console.log(users[checkExistingUserIndex].password);
+            if( users[checkExistingUserIndex].email === inputUserEmail &&
+                users[checkExistingUserIndex].username === inputUserName &&
+                users[checkExistingUserIndex].password === inputUserPassword
+                ) {
+                    response.status( 200 ).send( { message : "Successful login" } );
+            }else{
+                response.status( 404 ).send( { error: "Invalid credentials" } );
+            }
+        }
+
+        // console.log('checkExistingUserIndex: ', checkExistingUserIndex);
+
+        // if( inputUserName ){
+        //     // response.status( 404 ).send( { error: "Email already exists in the database" } );
+        // }else{
+        // }
+    }else{
+        response.status( 404 ).send( { error: "Invalid credentials" } );
+    }
+});
+
 // PUT - http://localhost:<PORT>/*
 router.put( `/`, ( request, response ) => {
     response.status( 200 ).send(``);
