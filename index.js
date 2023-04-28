@@ -8,9 +8,9 @@ server.use( bodyParser.json() );
 server.use( cors() );
 
 // Routes
-const userBaseUrl = '/';
+const userBaseUrl = '';
 const UserRoutes = require('./routes/UserRoutes');
-const postBaseUrl = '/';
+const postBaseUrl = '';
 const PostRoutes = require('./routes/PostRoutes');
 
 server.get('/', ( request, response ) => {
