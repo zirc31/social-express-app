@@ -7,18 +7,20 @@ const router = express.Router();
 
 let users = [
     {
-        "email" :    "admin@email.com",
-        "username" : "admin",
-        "password" : "12345"
+        "email" :    "zirc@dev.com",
+        "username" : "zircdev",
+        "password" : "123123456*"
     }
 ];
 
 /* 
     CRUD functionalities
 */
-// GET - http://localhost:<PORT>/*
-router.get( '/', ( request, response ) => {
-    response.status( 200 ).send(``);
+// GET - http://localhost:<PORT>/allusers // for testing purposes only
+router.get( '/allusers', ( request, response ) => {
+    console.log('---');
+    console.log(users);
+    response.status( 200 ).send( { message: 'All user data has been sent to server logs.' } );
 })
 
 /* 
@@ -48,24 +50,36 @@ router.get( '/', ( request, response ) => {
 */
 // POST - http://localhost:<PORT>/register
 router.post( '/register' , ( request, response ) => {
-    // console.log(request.body.email);
-    // console.log(request.body.username);
-    // console.log(request.body.password);
+
     if( request.body.email > "" && request.body.username > "" && request.body.password > "" ) {
         
-        const username = request.body.username;
-        const userFound = users.find( user => user.username.toLowerCase() === username.toLowerCase() );
-        if( userFound ){
+        const userEmail = request.body.email;
+        const emailFound = users.find( user => user.email === userEmail );
+
+        const userName = request.body.username;
+        const userFound = users.find( user => user.username === userName );
+        
+        if( emailFound ){
+            console.log('---');
+            console.log("error: ", "Email already exists in the database");
             response.status( 404 ).send( { error: "Email already exists in the database" } );
+        }else if( userFound ) {
+            console.log('---');
+            console.log("error: ", "Username already exists in the database");
+            response.status( 404 ).send( { error: "Username already exists in the database" } );
         }else{
+            console.log('---');
+            console.log("message: ", "User has been successfully registered!");
             users = [ ...users, request.body ];
-            console.log(users);
             response.status( 201 ).send( { message: "User has been successfully registered!" } );
         }
 
     }else{
+        console.log('---');
+        console.log("error: ", "Cannot create user");
         response.status( 404 ).send( { error: "Cannot create user" } );
     }
+
 });
 
 /*
@@ -86,35 +100,35 @@ router.post( '/login' , ( request, response ) => {
         const inputUserName = request.body.username;
         const inputUserPassword = request.body.password;
 
-        // const inputUserName = users.find( user => user.username.toLowerCase() === username.toLowerCase() );
-
         const checkExistingUserIndex = users.findIndex( user => user.username === inputUserName );
 
         if( checkExistingUserIndex === -1) {
+            console.log('---');
             console.log(checkExistingUserIndex);
+            console.log("error: ", "Invalid credentials");
             response.status( 404 ).send( { error: "Invalid credentials" } );
         }else{
-            console.log(checkExistingUserIndex);
-            // console.log(users[checkExistingUserIndex].email);
-            // console.log(users[checkExistingUserIndex].username);
-            // console.log(users[checkExistingUserIndex].password);
             if( users[checkExistingUserIndex].email === inputUserEmail &&
                 users[checkExistingUserIndex].username === inputUserName &&
                 users[checkExistingUserIndex].password === inputUserPassword
                 ) {
+                    console.log('---');
+                    console.log(checkExistingUserIndex);
+                    console.log(inputUserEmail);
+                    console.log(inputUserName);
+                    console.log(inputUserPassword);
+                    console.log("message: ", "Successful login");
                     response.status( 200 ).send( { message : "Successful login" } );
             }else{
+                console.log('---');
+                console.log("error: ", "Invalid credentials");
                 response.status( 404 ).send( { error: "Invalid credentials" } );
             }
         }
 
-        // console.log('checkExistingUserIndex: ', checkExistingUserIndex);
-
-        // if( inputUserName ){
-        //     // response.status( 404 ).send( { error: "Email already exists in the database" } );
-        // }else{
-        // }
     }else{
+        console.log('---');
+        console.log("error: ", "Invalid credentials");
         response.status( 404 ).send( { error: "Invalid credentials" } );
     }
 });
