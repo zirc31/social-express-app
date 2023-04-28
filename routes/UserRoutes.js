@@ -201,20 +201,6 @@ router.post( '/:userid/posts' , ( request, response ) => {
 });
 
 
-
-/**
- * 
- * let posts = [
-    {
-        postid: 'e2e62546-2e37-4f16-85f1-1d0bd6423841',
-        content: 'This is a content posts 1.',
-        timeCreated: '2023-04-28T16:56:11.277Z',
-        timeUpdated: '2023-04-28T16:56:11.277Z',
-        author: 'zircdev',
-        status: 'active'
-    },
- * 
- */
 // PUT - http://localhost:<PORT>/:userid/posts/:postid
 router.put( '/:userid/posts/:postid' , ( request, response ) => {
     const userId = request.params.userid;
@@ -243,6 +229,30 @@ router.put( '/:userid/posts/:postid' , ( request, response ) => {
         console.log('---');
         console.log("error: ", "Cannot update post.");
         response.status( 404 ).send( { error: "Cannot update post." } );
+    }
+});
+
+
+// DELETE - http://localhost:<PORT>/:userid/posts/:postid
+router.delete( '/:userid/posts/:postid' , ( request, response ) => {
+    const userId = request.params.userid;
+    const postId = request.params.postid;
+
+    const userFound = users.find( user => user.username === userId );
+    const postIdFound = posts.find( post => post.postid === postId );
+
+    if( postIdFound && userFound ) {
+        const postIndex = posts.findIndex( post => post.postid === postId );
+        posts[ postIndex ].status = 'inactive';
+        posts[ postIndex ].timeUpdated = new Date();
+
+        console.log('---');
+        console.log("message: ", "Post has been deleted");
+        response.status( 200 ).send( { message: "Post has been deleted" } );
+    }else{
+        console.log('---');
+        console.log("error: ", "Invalid URL request.");
+        response.status( 404 ).send( { error: "Invalid URL request." } );
     }
 });
 
