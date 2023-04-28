@@ -1,15 +1,15 @@
 # Social-Express-App
-View site demo: [https://#](#)
+Backend API URL demo: [https://social-express-app.onrender.com/](https://social-express-app.onrender.com/)
 
 ## Description
-UCC Activity 0428 Day 71.
+A Server using ExpressJS that will cater to a social application front end. (UCC Act 0428 Day 71.)
 
 ## Attributes
 Repository:
-  1. [Github](https://github.com/zirc31/social-express-app)
+  1. [Social-Express-App on GitHub](https://github.com/zirc31/social-express-app)
 
 ## Others
-  1. [GitHub Repositories](https://github.com/zirc31?tab=repositories)
+  1. [All GitHub Repositories](https://github.com/zirc31?tab=repositories)
 
 ## For Contact and Support
 You can contact me via [LinkedIn](https://www.linkedin.com/in/cx31-uiuxdev/) & [Facebook](https://www.facebook.com/zircitsolutions).
