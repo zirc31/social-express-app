@@ -18,9 +18,11 @@ let posts = [
 /* 
     CRUD functionalities
 */
-// GET - http://localhost:<PORT>/*
-router.get( '/', ( request, response ) => {
-    response.status( 200 ).send(``);
+// GET - http://localhost:<PORT>/:userid/posts
+router.get( '/posts', ( request, response ) => {
+
+    response.status( 200 ).send( { message: "Posts users "} );
+    // response.status( 200 ).send( { message: "Posts"} );
 })
 
 /* 
